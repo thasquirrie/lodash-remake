@@ -1,15 +1,19 @@
 const _ = {
+  // Clamp
+  // This method clamps number within the inclusive lower and upper bounds.
   clamp(number, lower, upper) {
     const num1 = Math.max(number, lower);
     const num2 = Math.min(num1, upper);
     return Math.min(num1, num2);
   },
+  // inRange
+  // Checks if a number is between start and up to, but not including, end. If start is not specified, it is set to start with start then set to 0. If start is greater than end the params are swapped to support negative ranges.
   inRange(number, start, end) {
     if (end === undefined) {
       end = start;
       start = 0;
       return this.inRange(number, start, end);
-    } else if (number >= start && number <= end) {
+    } else if (number >= start && number < end) {
       return true;
     }
       else if (start > end) {
@@ -21,9 +25,13 @@ const _ = {
       return false;
     }
   },
+  // words
+  //Splits string into an array of words.
   words(word, pattern) {
     return word.split(' ');
   },
+  //Pad
+  //Pads string on the left and right sides if it's shorter than length. Padding characters are truncate can't be evenly divided by length.
   pad(str, desiredLength) {
     const diff = desiredLength - str.length;
     const newString = str.split('');
@@ -50,6 +58,8 @@ const _ = {
     } 
     return newString.join('');
   },
+  //has
+  //Checks if path is direct property of object.
   has(obj, key) {
     let hasValue = false;
     if (obj[key] !== undefined) {
@@ -57,6 +67,8 @@ const _ = {
     }
     return hasValue;
   },
+  //invert
+  //Creates an object composed of the inverted keys nad values of object.
   invert(obj) {
     const invertedObj = {};
     for (key in obj) {
@@ -67,6 +79,8 @@ const _ = {
     }
     return invertedObj;
   },
+  //findKey
+  //This method returns the key of the first element predicate returns truthy for instead of the element itself.
   findKey(obj, predicate) {
     let val = false;
     for (key in obj) {
@@ -77,6 +91,8 @@ const _ = {
     }
     return undefined;
   },
+  // drop
+  //Creates a slice of array with n elements dropped from the beginning.
   drop(arr, noOfElements) {
     // if(noOfElements === undefined) {
     //   arr.shift(arr[0]);
@@ -91,6 +107,8 @@ const _ = {
     arr.splice(0, noOfElements);
     return arr;
   },
+  //dropWhile
+  //Creates a slice of array excluding elements dropped from the beginning. Elements are dropped until predicate returns falsy. The predicate is invoked with three arguments: (value, index array)
   dropWhile(arr, predicate) {
     let dropNumber = arr.findIndex((element, index) => {
       return !predicate(element, index, arr);
@@ -99,6 +117,8 @@ const _ = {
     const dropArray = this.drop(arr, dropNumber);
     return dropArray;
   },
+  //chunk
+  //Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
   chunk(arr, size) {
     const newArr = [];
     for (let i = 0; i < arr.length; i++) {
